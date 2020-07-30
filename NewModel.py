@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import keras
@@ -32,8 +32,8 @@ def make_model(i=0):
     model.add(Dense(64+i,activation='relu'))
     model.add(Dense(NUM_CLASSES))
     model.add(Activation('softmax'))
-    return model
-model=make_model()
+    return model,i
+model,neutron=make_model()
 model.compile(loss='categorical_crossentropy',optimizer='Adam',metrics=['accuracy'])
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 checkpoint = ModelCheckpoint("mnist.h5",monitor="val_loss",mode="min",save_best_only = True,verbose=1)
@@ -45,14 +45,14 @@ EPOCHS=1
 if __name__=='__main__':
     model.fit(x_train2,y_train2, batch_size=BATCH_SIZE,epochs = EPOCHS,validation_data = (x_test2,y_test2),callbacks=callbacks,shuffle=True,verbose=1)
 scores=model.evaluate(x_test2,y_test2,verbose=1)
-print(i)
 print('TEST ACCURACY:',scores[1])
+print(neutron)
 acc=open("accuracy.txt","w+")
 acc.write(str(scores[1]))
 acc.close()
 
 
-# In[ ]:
+# In[2]:
 
 
 
